@@ -23,7 +23,7 @@ pass
 
 ## DASH/HLS content ID
 
-1. https://ctv.ca requires content ID
+1. https://crave.ca requires content ID
 2. content ID missing from MPD
 
 ## MP4 content ID
