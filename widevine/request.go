@@ -6,6 +6,20 @@ import (
    "crypto/rsa"
 )
 
+// EncodeSignedMessage envelopes the request with an RSA signature.
+func EncodeSignedMessage(requestData []byte, privateKey *rsa.PrivateKey) ([]byte, error) {
+   signature, err := signMessage(requestData, privateKey)
+   if err != nil {
+      return nil, err
+   }
+   message := protobuf.Message{
+      protobuf.Varint(1, 1), // LICENSE_REQUEST
+      protobuf.Bytes(2, requestData),
+      protobuf.Bytes(3, signature),
+   }
+   return message.Encode()
+}
+
 // EncodeLicenseRequest creates and serializes a LicenseRequest protobuf message.
 func (p *PsshData) EncodeLicenseRequest(clientId []byte) ([]byte, error) {
    psshBytes, err := p.Encode()
@@ -20,20 +34,6 @@ func (p *PsshData) EncodeLicenseRequest(clientId []byte) ([]byte, error) {
       protobuf.Bytes(1, clientId),
       contentIdentification,
       protobuf.Varint(3, 1), // STREAMING
-   }
-   return message.Encode()
-}
-
-// EncodeSignedMessage envelopes the request with an RSA signature.
-func EncodeSignedMessage(requestData []byte, privateKey *rsa.PrivateKey) ([]byte, error) {
-   signature, err := signMessage(requestData, privateKey)
-   if err != nil {
-      return nil, err
-   }
-   message := protobuf.Message{
-      protobuf.Varint(1, 1), // LICENSE_REQUEST
-      protobuf.Bytes(2, requestData),
-      protobuf.Bytes(3, signature),
    }
    return message.Encode()
 }

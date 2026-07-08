@@ -14,6 +14,47 @@ import (
    "github.com/emmansun/gmsm/padding"
 )
 
+func ParseChain(data []byte) (*Chain, error) {
+   c := &Chain{}
+   if len(data) < 20 {
+      return nil, errors.New("chain data too short")
+   }
+
+   tag := binary.BigEndian.Uint32(data)
+   if tag != ChainHeaderTag {
+      return nil, errors.New("failed to find chain magic")
+   }
+   data = data[4:]
+
+   c.Header.HeaderTag = tag
+   c.Header.Version = binary.BigEndian.Uint32(data)
+   data = data[4:]
+
+   c.Header.CbChain = binary.BigEndian.Uint32(data)
+   data = data[4:]
+
+   c.Header.Flags = binary.BigEndian.Uint32(data)
+   data = data[4:]
+
+   certCount := binary.BigEndian.Uint32(data)
+   data = data[4:]
+
+   c.Header.Certs = certCount
+   c.Certificates = make([]Certificate, certCount)
+
+   for index := uint32(0); index < certCount; index++ {
+      var cert Certificate
+      bytesRead, err := cert.decode(data)
+      if err != nil {
+         return nil, err
+      }
+      c.Certificates[index] = cert
+      data = data[bytesRead:]
+   }
+
+   return c, nil
+}
+
 func (c *Chain) LicenseRequestBytes(signingKey *ecdsa.PrivateKey, kid []byte, contentID string) ([]byte, error) {
    var key xmlKey
    err := key.initialize()
@@ -102,47 +143,6 @@ func (c *Chain) cipherData(key *xmlKey) ([]byte, error) {
    data = padding.NewPKCS7Padding(aes.BlockSize).Pad(data)
    cipher.NewCBCEncrypter(block, key.aesIv()).CryptBlocks(data, data)
    return append(key.aesIv(), data...), nil
-}
-
-func ParseChain(data []byte) (*Chain, error) {
-   c := &Chain{}
-   if len(data) < 20 {
-      return nil, errors.New("chain data too short")
-   }
-
-   tag := binary.BigEndian.Uint32(data)
-   if tag != ChainHeaderTag {
-      return nil, errors.New("failed to find chain magic")
-   }
-   data = data[4:]
-
-   c.Header.HeaderTag = tag
-   c.Header.Version = binary.BigEndian.Uint32(data)
-   data = data[4:]
-
-   c.Header.CbChain = binary.BigEndian.Uint32(data)
-   data = data[4:]
-
-   c.Header.Flags = binary.BigEndian.Uint32(data)
-   data = data[4:]
-
-   certCount := binary.BigEndian.Uint32(data)
-   data = data[4:]
-
-   c.Header.Certs = certCount
-   c.Certificates = make([]Certificate, certCount)
-
-   for index := uint32(0); index < certCount; index++ {
-      var cert Certificate
-      bytesRead, err := cert.decode(data)
-      if err != nil {
-         return nil, err
-      }
-      c.Certificates[index] = cert
-      data = data[bytesRead:]
-   }
-
-   return c, nil
 }
 
 func (c *Chain) Bytes() []byte {

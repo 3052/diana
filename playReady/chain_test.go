@@ -10,6 +10,29 @@ import (
    "testing"
 )
 
+var key_tests = []struct {
+   content_id string
+   key        string
+   key_id     string
+   transform  func([]byte) ([]byte, error)
+   url        string
+}{
+   {
+      key_id:     "10000000000000000000000000000000",
+      content_id: "",
+      transform:  func(payload []byte) ([]byte, error) { return payload, nil },
+      url:        "https://test.playready.microsoft.com/service/rightsmanager.asmx?cfg=ck:AAAAAAAAAAAAAAAAAAAAAA==,ckt:AES128BitCBC",
+      key:        "00000000000000000000000000000000",
+   },
+   {
+      key_id:     "10000000000000000000000000000000",
+      content_id: "",
+      transform:  func(payload []byte) ([]byte, error) { return payload, nil },
+      url:        "https://test.playready.microsoft.com/service/rightsmanager.asmx?cfg=ck:AAAAAAAAAAAAAAAAAAAAAA==",
+      key:        "00000000000000000000000000000000",
+   },
+}
+
 func TestKey(t *testing.T) {
    paths := getPaths("ignore/SL2000")
    data, err := os.ReadFile(paths.devCert)
@@ -100,40 +123,9 @@ func TestKey(t *testing.T) {
    }
 }
 
-var key_tests = []struct {
-   content_id string
-   key        string
-   key_id     string
-   transform  func([]byte) ([]byte, error)
-   url        string
-}{
-   {
-      key_id:     "10000000000000000000000000000000",
-      content_id: "",
-      transform:  func(payload []byte) ([]byte, error) { return payload, nil },
-      url:        "https://test.playready.microsoft.com/service/rightsmanager.asmx?cfg=ck:AAAAAAAAAAAAAAAAAAAAAA==,ckt:AES128BitCBC",
-      key:        "00000000000000000000000000000000",
-   },
-   {
-      key_id:     "10000000000000000000000000000000",
-      content_id: "",
-      transform:  func(payload []byte) ([]byte, error) { return payload, nil },
-      url:        "https://test.playready.microsoft.com/service/rightsmanager.asmx?cfg=ck:AAAAAAAAAAAAAAAAAAAAAA==",
-      key:        "00000000000000000000000000000000",
-   },
-}
-
 func write_file(name string, data []byte) error {
    log.Println("WriteFile", name)
    return os.WriteFile(name, data, os.ModePerm)
-}
-
-type testPaths struct {
-   groupCert string
-   zPriv     string
-   devCert   string
-   zPrivEncr string
-   zPrivSig  string
 }
 
 func getPaths(baseDir string) testPaths {
@@ -199,4 +191,12 @@ func TestChain(t *testing.T) {
          t.Fatal(err)
       }
    }
+}
+
+type testPaths struct {
+   groupCert string
+   zPriv     string
+   devCert   string
+   zPrivEncr string
+   zPrivSig  string
 }

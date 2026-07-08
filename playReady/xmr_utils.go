@@ -2,13 +2,6 @@ package playReady
 
 import "encoding/binary"
 
-func decodePaddedString(data []byte) (PaddedString, int) {
-   length := binary.BigEndian.Uint32(data)
-   paddedLength := (length + 3) &^ 3
-   val := string(data[4 : 4+length])
-   return PaddedString(val), int(4 + paddedLength)
-}
-
 const (
    HeaderLength  = (4 * 2) + 16 // Assuming SIZEOF(DRM_ID) == 16
    MagicConstant = 0x584D5200   // 'XMR\0'
@@ -28,6 +21,13 @@ func encodePaddedString(val PaddedString) []byte {
    binary.BigEndian.PutUint32(data, length)
    copy(data[4:], val)
    return data
+}
+
+func decodePaddedString(data []byte) (PaddedString, int) {
+   length := binary.BigEndian.Uint32(data)
+   paddedLength := (length + 3) &^ 3
+   val := string(data[4 : 4+length])
+   return PaddedString(val), int(4 + paddedLength)
 }
 
 // AsymmetricEncryptionType is used for encrypting the content key

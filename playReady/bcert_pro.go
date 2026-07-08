@@ -10,20 +10,6 @@ import (
    "unicode/utf16"
 )
 
-func (m *ManufacturerStrings) String() string {
-   var data []byte
-   data = fmt.Appendln(data, "manufacturer name:", m.ManufacturerName)
-   data = fmt.Append(data, "model number: ", m.ModelNumber)
-   return string(data)
-}
-
-func (c *Certificate) String() string {
-   var data []byte
-   data = fmt.Appendln(data, &c.ManufacturerInfo.ManufacturerStrings)
-   data = fmt.Append(data, "security level: ", c.BasicInfo.SecurityLevel)
-   return string(data)
-}
-
 const (
    CertHeaderTag = 0x43455254 // "CERT"
    CertVersion   = 0x00000001
@@ -146,6 +132,13 @@ type Certificate struct {
    UnknownRecords map[uint16][]UnknownRecord
 }
 
+func (c *Certificate) String() string {
+   var data []byte
+   data = fmt.Appendln(data, &c.ManufacturerInfo.ManufacturerStrings)
+   data = fmt.Append(data, "security level: ", c.BasicInfo.SecurityLevel)
+   return string(data)
+}
+
 type Chain struct {
    Header       ChainHeader
    Certificates []Certificate
@@ -196,6 +189,13 @@ type ManufacturerStrings struct {
    ManufacturerName PaddedString
    ModelName        PaddedString
    ModelNumber      PaddedString
+}
+
+func (m *ManufacturerStrings) String() string {
+   var data []byte
+   data = fmt.Appendln(data, "manufacturer name:", m.ManufacturerName)
+   data = fmt.Append(data, "model number: ", m.ModelNumber)
+   return string(data)
 }
 
 type ObjectHeader struct {
