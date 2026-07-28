@@ -5,7 +5,8 @@
 > Oh, when I get up, this is what I see\
 > Welcome to reality
 >
-> [Grimes](//youtube.com/watch?v=N9XKLqGqwLA) (2015)
+> — Grimes (2015)
+> https://youtube.com/watch?v=N9XKLqGqwLA
 
 Digital rights management (DRM)
 
