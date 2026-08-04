@@ -1,4 +1,3 @@
-// response.go
 package widevine
 
 import (
@@ -118,3 +117,5 @@ func decodeLicenseFromMessage(message protobuf.Message, requestData []byte, sess
    }
    return keys, nil
 }
+
+// response.go

@@ -1,4 +1,3 @@
-// errors.go
 package widevine
 
 import (
@@ -14,3 +13,5 @@ func decodeErrorFromMessage(message protobuf.Message) error {
    }
    return fmt.Errorf("widevine license error: code %v", errorCode.Numeric)
 }
+
+// errors.go

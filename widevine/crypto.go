@@ -1,4 +1,3 @@
-// crypto.go
 package widevine
 
 import (
@@ -47,3 +46,5 @@ type noopReader struct{}
 func (noopReader) Read(p []byte) (n int, err error) {
    return len(p), nil
 }
+
+// crypto.go

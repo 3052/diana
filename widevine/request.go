@@ -1,4 +1,3 @@
-// request.go
 package widevine
 
 import (
@@ -37,3 +36,5 @@ func (p *PsshData) EncodeLicenseRequest(clientId []byte) ([]byte, error) {
    }
    return message.Encode()
 }
+
+// request.go

@@ -1,4 +1,3 @@
-// pssh.go
 package widevine
 
 import "41.neocities.org/protobuf"
@@ -42,3 +41,5 @@ func (p *PsshData) Encode() ([]byte, error) {
    }
    return message.Encode()
 }
+
+// pssh.go
