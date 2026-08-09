@@ -126,6 +126,7 @@ type InnerChallenge struct {
 type La struct {
    Version       string        `xml:"Version"`       // microsoft.com
    ContentHeader ContentHeader `xml:"ContentHeader"` // microsoft.com
+   ClientInfo    *ClientInfo   `xml:"CLIENTINFO"`    // microsoft.com
    LicenseNonce  Bytes         `xml:"LicenseNonce"`  // 9c9media.com
    ClientTime    int           `xml:"ClientTime"`    // 9c9media.com
    EncryptedData EncryptedData `xml:"EncryptedData"` // microsoft.com
@@ -133,6 +134,10 @@ type La struct {
    // ATTRIBUTE ORDER MATTERS
    XmlNs string `xml:"xmlns,attr"` // microsoft.com
    Id    string `xml:"Id,attr"`    // microsoft.com
+}
+
+type ClientInfo struct {
+   ClientVersion string `xml:"CLIENTVERSION"` // microsoft.com
 }
 
 type OuterChallenge struct {
@@ -171,3 +176,5 @@ type WrmHeaderData struct {
    CustomAttributes *CustomAttributes `xml:"CUSTOMATTRIBUTES"` // 9c9media.com
    Kid              Bytes             `xml:"KID"`              // microsoft.com
 }
+
+// xml/xml.go

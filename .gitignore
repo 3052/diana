@@ -1,4 +1,6 @@
-client_id.bin
+bdevcert.dat
+cookies.txt
 device_client_id_blob
 device_private_key
-private_key.pem
+zprivencr.dat
+zprivsig.dat
