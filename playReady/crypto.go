@@ -10,7 +10,6 @@ import (
    "errors"
    "filippo.io/nistec"
    "github.com/emmansun/gmsm/cipher"
-   
    "time"
 )
 
@@ -155,10 +154,7 @@ func newLa(pubKey *ecdsa.PublicKey, cipherData, kid []byte, contentId string) (*
    nonce := [16]byte{1} // amazon.com cannot be zero
 
    return &xml.La{
-      ClientInfo: &xml.ClientInfo{ // microsoft.com
-         ClientVersion: "10.0.16384.10011", // microsoft.com
-      },
-      ClientTime: int(time.Now().Unix()), // 9c9media.com
+      ClientTime: time.Now().Unix(), // peacocktv.com
       ContentHeader: xml.ContentHeader{ // microsoft.com
          WrmHeader: xml.WrmHeader{ // microsoft.com
             Data:    headerData,                                                 // microsoft.com
