@@ -250,3 +250,5 @@ func (l *License) verify(contentIntegrity []byte) error {
    }
    return nil
 }
+
+// license.go

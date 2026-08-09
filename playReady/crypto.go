@@ -242,3 +242,5 @@ func (x *xmlKey) initialize() error {
    copy(x.X[:], pubBytes[1:33])
    return nil
 }
+
+// crypto.go

@@ -1,8 +1,6 @@
 package playReady
 
-import (
-   "encoding/binary"
-)
+import "encoding/binary"
 
 func (c *Certificate) encode() []byte {
    var raw []byte
@@ -105,3 +103,5 @@ func (c *Certificate) encode() []byte {
 
    return append(data, raw...)
 }
+
+// cert_encode.go

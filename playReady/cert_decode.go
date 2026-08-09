@@ -165,3 +165,5 @@ func (c *Certificate) verify(pubKey []byte) bool {
 
    return ecdsa.Verify(publicKey, signatureDigest[:], r, s)
 }
+
+// cert_decode.go

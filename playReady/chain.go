@@ -274,3 +274,5 @@ func (c *Chain) GenerateLeaf(modelKey, signingKey, encryptKey *ecdsa.PrivateKey)
    c.Certificates = slices.Insert(c.Certificates, 0, unsignedCert)
    return nil
 }
+
+// chain.go

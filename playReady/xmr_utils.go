@@ -205,3 +205,5 @@ func decodeFtlv(data []byte) (ftlv, int) {
    n += len(f.Value)
    return f, n
 }
+
+// xmr_utils.go
