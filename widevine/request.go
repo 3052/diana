@@ -32,7 +32,7 @@ func (p *PsshData) EncodeLicenseRequest(clientId []byte) ([]byte, error) {
    message := protobuf.Message{
       protobuf.Bytes(1, clientId),
       contentIdentification,
-      protobuf.Varint(3, 1), // STREAMING
+      protobuf.Varint(3, 1), // NEW
    }
    return message.Encode()
 }
