@@ -31,6 +31,14 @@ func GetKey(keys []*KeyContainer, id []byte) ([]byte, error) {
    return nil, errors.New("key not found")
 }
 
+func decodeErrorFromMessage(message protobuf.Message) error {
+   errorCode, ok := message.Field(1)
+   if !ok || errorCode == nil {
+      return errors.New("widevine license error: unknown code")
+   }
+   return fmt.Errorf("widevine license error: code %v", errorCode.Numeric)
+}
+
 type KeyContainer struct {
    Id  []byte
    Iv  []byte
