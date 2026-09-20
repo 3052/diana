@@ -4,11 +4,6 @@
 2. try to get content ID from MP4
 3. get `default_KID` from MP4
 
-## MP4 PSSH key ID
-
-1. https://hulu.com MP4 has no PSSH
-2. https://disneyplus.com MP4 has no PSSH
-
 ## DASH/HLS `default_KID`
 
 missing from https://disneyplus.com
@@ -25,6 +20,11 @@ pass
 
 1. https://crave.ca requires content ID
 2. content ID missing from MPD
+
+## MP4 PSSH key ID
+
+1. https://hulu.com MP4 has no PSSH
+2. https://disneyplus.com MP4 has no PSSH
 
 ## MP4 content ID
 
